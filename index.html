@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>فرم ثبت درخواست</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0d0f14;
+      --surface:   #161921;
+      --surface2:  #1e2230;
+      --border:    #2a2f3f;
+      --accent:    #e8b86d;
+      --accent2:   #c9974a;
+      --text:      #f0f2f5;
+      --muted:     #8892a4;
+      --success:   #4ade80;
+      --error:     #f87171;
+      --radius:    14px;
+      --font:      'Vazirmatn', sans-serif;
+    }
+
+    html, body {
+      min-height: 100%;
+      background: var(--bg);
+      font-family: var(--font);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 24px 16px 48px;
+      background:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232,184,109,0.12) 0%, transparent 70%),
+        var(--bg);
+    }
+
+    .card {
+      width: 100%;
+      max-width: 480px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,184,109,0.06);
+      animation: slideUp 0.5s cubic-bezier(0.16,1,0.3,1) both;
+    }
+
+    @keyframes slideUp {
+      from { opacity:0; transform:translateY(24px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    /* ───── Header ───── */
+    .header {
+      background: linear-gradient(135deg, #1a1e2a 0%, #141820 100%);
+      padding: 32px 28px 28px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .header::before {
+      content:'';
+      position:absolute;
+      top:-40px; left:-40px;
+      width:160px; height:160px;
+      background: radial-gradient(circle, rgba(232,184,109,0.18) 0%, transparent 70%);
+      pointer-events:none;
+    }
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .logo-icon {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 4px 16px rgba(232,184,109,0.3);
+      flex-shrink: 0;
+    }
+    .brand-name {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--accent);
+      letter-spacing: -0.3px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      line-height: 1.4;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .header p {
+      font-size: 13.5px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ───── Badge row ───── */
+    .badges {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 14px 28px;
+      background: var(--surface2);
+      border-bottom: 1px solid var(--border);
+    }
+    .badge {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 11px; color: var(--muted);
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      padding: 5px 10px;
+    }
+    .badge span { color: var(--accent); font-size: 12px; }
+
+    /* ───── Form body ───── */
+    form { padding: 24px 28px 28px; }
+
+    .field {
+      margin-bottom: 18px;
+      animation: fadeIn 0.4s ease both;
+    }
+    .field:nth-child(1)  { animation-delay:.05s }
+    .field:nth-child(2)  { animation-delay:.10s }
+    .field:nth-child(3)  { animation-delay:.15s }
+    .field:nth-child(4)  { animation-delay:.20s }
+    .field:nth-child(5)  { animation-delay:.25s }
+    .field:nth-child(6)  { animation-delay:.30s }
+    .field:nth-child(7)  { animation-delay:.35s }
+    @keyframes fadeIn {
+      from { opacity:0; transform:translateY(8px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 8px;
+      letter-spacing: 0.2px;
+    }
+    label .lbl-icon { font-size: 15px; }
+    label .req { color: var(--accent); font-size: 14px; margin-right: 2px; }
+
+    input, select, textarea {
+      width: 100%;
+      background: var(--surface2);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 13px 16px;
+      font-family: var(--font);
+      font-size: 15px;
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      direction: rtl;
+      -webkit-appearance: none;
+    }
+    input::placeholder, textarea::placeholder { color: #4a5268; }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--accent);
+      background: #1c2030;
+      box-shadow: 0 0 0 3px rgba(232,184,109,0.12);
+    }
+    input.error, select.error, textarea.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(248,113,113,0.12);
+    }
+    textarea { resize: vertical; min-height: 100px; line-height: 1.7; }
+    select { cursor: pointer; }
+    select option { background: #1e2230; }
+
+    /* phone field */
+    .phone-wrap { position: relative; }
+    .phone-prefix {
+      position: absolute;
+      left: 14px; top: 50%; transform: translateY(-50%);
+      font-size: 14px; color: var(--accent); font-weight: 600;
+      pointer-events: none;
+    }
+    .phone-wrap input { padding-left: 48px; letter-spacing: 0.5px; direction: ltr; text-align: right; }
+
+    .field-hint {
+      font-size: 11.5px; color: #4a5268;
+      margin-top: 5px; padding-right: 4px;
+    }
+    .err-msg {
+      font-size: 11.5px; color: var(--error);
+      margin-top: 5px; padding-right: 4px;
+      display: none;
+    }
+
+    /* two-column row */
+    .row2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    /* ───── Submit ───── */
+    .submit-wrap { margin-top: 24px; }
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #0d0f14;
+      font-family: var(--font);
+      font-size: 16px;
+      font-weight: 700;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+      box-shadow: 0 8px 24px rgba(232,184,109,0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-submit::after {
+      content:'';
+      position:absolute; inset:0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      border-radius: inherit;
+    }
+    .btn-submit:hover:not(:disabled) {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 32px rgba(232,184,109,0.4);
+    }
+    .btn-submit:active:not(:disabled) { transform: translateY(1px); }
+    .btn-submit:disabled { opacity: 0.7; cursor: not-allowed; }
+
+    /* spinner */
+    .spinner {
+      display: inline-block; width: 18px; height: 18px;
+      border: 2px solid rgba(0,0,0,0.3); border-top-color: #0d0f14;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle; margin-left: 8px;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* ───── States ───── */
+    .state-overlay {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 48px 28px 56px;
+      min-height: 300px;
+    }
+    .state-overlay.active { display: flex; }
+
+    .icon-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; margin-bottom: 20px;
+    }
+    .icon-circle.success {
+      background: rgba(74,222,128,0.12);
+      border: 2px solid rgba(74,222,128,0.3);
+      animation: popIn .4s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    .icon-circle.error-ic {
+      background: rgba(248,113,113,0.12);
+      border: 2px solid rgba(248,113,113,0.3);
+      animation: popIn .4s cubic-bezier(0.34,1.56,0.64,1) both;
+    }
+    @keyframes popIn {
+      from { transform:scale(0); opacity:0; }
+      to   { transform:scale(1); opacity:1; }
+    }
+    .state-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+    .state-body  { font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 300px; }
+    .btn-retry {
+      margin-top: 24px; padding: 12px 28px;
+      background: var(--surface2); border: 1px solid var(--border);
+      color: var(--text); border-radius: var(--radius);
+      font-family: var(--font); font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: border-color .2s;
+    }
+    .btn-retry:hover { border-color: var(--accent); }
+
+    /* ───── Footer ───── */
+    .footer {
+      padding: 16px 28px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+      color: #3a3f52;
+      text-align: center;
+      background: rgba(0,0,0,0.15);
+    }
+
+    /* progress dots */
+    .progress-dots {
+      display: flex; justify-content: center; gap: 6px;
+      padding: 12px 0 4px;
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--border); transition: background .3s, width .3s;
+    }
+    .dot.active { background: var(--accent); width: 18px; border-radius: 3px; }
+
+    @media (max-width: 400px) {
+      body { padding: 16px 12px 40px; }
+      .header, form { padding-left: 20px; padding-right: 20px; }
+      .badges { padding-left: 20px; padding-right: 20px; }
+      .row2 { grid-template-columns: 1fr; gap: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="card" id="main-card">
+
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-wrap">
+      <div class="logo-icon">🏷️</div>
+      <div class="brand-name" id="brand-name">تیم فروش</div>
+    </div>
+    <h1>ثبت درخواست همکاری</h1>
+    <p>اطلاعات خود را وارد کنید تا کارشناسان ما در اسرع وقت با شما تماس بگیرند.</p>
+  </div>
+
+  <!-- Trust badges -->
+  <div class="badges">
+    <div class="badge"><span>⚡</span> پاسخ سریع</div>
+    <div class="badge"><span>🔒</span> اطلاعات محفوظ</div>
+    <div class="badge"><span>🤝</span> بدون تعهد</div>
+  </div>
+
+  <!-- ─── Form ─── -->
+  <form id="lead-form" novalidate>
+
+    <div class="row2">
+      <div class="field">
+        <label><span class="lbl-icon">👤</span> نام کامل <span class="req">*</span></label>
+        <input type="text" id="name" name="name" placeholder="مثلاً: علی رضایی" maxlength="80" autocomplete="name"/>
+        <div class="err-msg" id="err-name">لطفاً نام خود را وارد کنید</div>
+      </div>
+      <div class="field">
+        <label><span class="lbl-icon">📱</span> موبایل <span class="req">*</span></label>
+        <div class="phone-wrap">
+          <span class="phone-prefix">🇮🇷</span>
+          <input type="tel" id="phone" name="phone" placeholder="09121234567" maxlength="11" inputmode="numeric" autocomplete="tel"/>
+        </div>
+        <div class="err-msg" id="err-phone">شماره معتبر وارد کنید</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label><span class="lbl-icon">🏪</span> نام کسب‌وکار <span class="req">*</span></label>
+      <input type="text" id="business_name" name="business_name" placeholder="مثلاً: فروشگاه پارچه احمدی" maxlength="100"/>
+      <div class="err-msg" id="err-business">لطفاً نام کسب‌وکار را وارد کنید</div>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label><span class="lbl-icon">📦</span> محصول مورد نظر <span class="req">*</span></label>
+        <input type="text" id="product_interest" name="product_interest" placeholder="مثلاً: پارچه پنبه‌ای" maxlength="120"/>
+        <div class="err-msg" id="err-product">لطفاً محصول مورد نظر را بنویسید</div>
+      </div>
+      <div class="field">
+        <label><span class="lbl-icon">📊</span> حجم تقریبی سفارش</label>
+        <input type="text" id="estimated_volume" name="estimated_volume" placeholder="مثلاً: ۲۰۰ متر ماهانه" maxlength="80"/>
+        <div class="field-hint">اختیاری — هر واحدی که راحت هستید</div>
+      </div>
+    </div>
+
+    <div class="row2">
+      <div class="field">
+        <label><span class="lbl-icon">🏙️</span> شهر <span class="req">*</span></label>
+        <input type="text" id="city" name="city" placeholder="مثلاً: تهران" maxlength="60"/>
+        <div class="err-msg" id="err-city">لطفاً شهر را وارد کنید</div>
+      </div>
+      <div class="field">
+        <label><span class="lbl-icon">🔗</span> از کجا آشنا شدید؟</label>
+        <select id="source" name="source">
+          <option value="instagram">اینستاگرام</option>
+          <option value="telegram">تلگرام</option>
+          <option value="referral">معرفی دوست</option>
+          <option value="website">وبسایت</option>
+          <option value="direct">مستقیم</option>
+          <option value="other">سایر</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label><span class="lbl-icon">💬</span> پیام شما <span class="req">*</span></label>
+      <textarea id="message" name="message" placeholder="نیاز خود را توضیح دهید — مثلاً: دنبال تامین‌کننده ثابت ماهانه هستیم، قیمت عمده می‌خوایم..." maxlength="600" rows="4"></textarea>
+      <div class="err-msg" id="err-message">لطفاً توضیح مختصری بنویسید</div>
+      <div class="field-hint"><span id="char-count">0</span>/600</div>
+    </div>
+
+    <div class="submit-wrap">
+      <button type="submit" class="btn-submit" id="btn-submit">
+        ارسال درخواست 🚀
+      </button>
+    </div>
+
+  </form>
+
+  <!-- ─── Success state ─── -->
+  <div class="state-overlay" id="state-success">
+    <div class="icon-circle success">✅</div>
+    <div class="state-title">درخواست ثبت شد!</div>
+    <div class="state-body">
+      ممنون از وقتی که گذاشتید.<br>
+      کارشناسان ما به زودی با شما تماس می‌گیرند. 🙏
+    </div>
+  </div>
+
+  <!-- ─── Error state ─── -->
+  <div class="state-overlay" id="state-error">
+    <div class="icon-circle error-ic">⚠️</div>
+    <div class="state-title" style="color:var(--error)">خطا در ارسال</div>
+    <div class="state-body">
+      متأسفانه اتصال برقرار نشد.<br>
+      لطفاً دوباره امتحان کنید یا از طریق DM پیام بدید.
+    </div>
+    <button class="btn-retry" id="btn-retry">تلاش مجدد</button>
+  </div>
+
+  <div class="footer">
+    اطلاعات شما کاملاً محرمانه بوده و فقط برای ارتباط تجاری استفاده می‌شود.
+  </div>
+
+</div>
+
+<script>
+  // ════════════════════════════════════════════════
+  //  ⚙️  CONFIG — فقط این خط رو تغییر بده
+  // ════════════════════════════════════════════════
+  const WEBHOOK_URL = "https://keyvan001.app.n8n.cloud/webhook/lead-form";
+  //
+  // نکته: اگه می‌خوای source رو از URL بخونی (مثلاً ?source=instagram)
+  // کامنت خط بالا رو بردار و این کد رو فعال کن:
+  // const urlSource = new URLSearchParams(window.location.search).get('source');
+  // ════════════════════════════════════════════════
+
+  const form         = document.getElementById('lead-form');
+  const btnSubmit    = document.getElementById('btn-submit');
+  const stateSuccess = document.getElementById('state-success');
+  const stateError   = document.getElementById('state-error');
+  const btnRetry     = document.getElementById('btn-retry');
+  const msgArea      = document.getElementById('message');
+  const charCount    = document.getElementById('char-count');
+
+  // Live char count
+  msgArea.addEventListener('input', () => {
+    charCount.textContent = msgArea.value.length;
+  });
+
+  // ── Validation helpers ──
+  function showErr(id, show) {
+    const el = document.getElementById('err-' + id);
+    const input = document.getElementById(id === 'business' ? 'business_name' : id === 'product' ? 'product_interest' : id);
+    if (!el || !input) return;
+    el.style.display = show ? 'block' : 'none';
+    if (show) input.classList.add('error'); else input.classList.remove('error');
+  }
+
+  function validate() {
+    let ok = true;
+    const name   = document.getElementById('name').value.trim();
+    const phone  = document.getElementById('phone').value.trim();
+    const biz    = document.getElementById('business_name').value.trim();
+    const prod   = document.getElementById('product_interest').value.trim();
+    const city   = document.getElementById('city').value.trim();
+    const msg    = document.getElementById('message').value.trim();
+
+    if (!name)  { showErr('name', true);    ok=false; } else showErr('name', false);
+    if (!phone || !/^09\d{9}$/.test(phone)) { showErr('phone', true); ok=false; } else showErr('phone', false);
+    if (!biz)   { showErr('business', true); ok=false; } else showErr('business', false);
+    if (!prod)  { showErr('product', true);  ok=false; } else showErr('product', false);
+    if (!city)  { showErr('city', true);     ok=false; } else showErr('city', false);
+    if (!msg || msg.length < 5) { showErr('message', true); ok=false; } else showErr('message', false);
+    return ok;
+  }
+
+  // ── Submit ──
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!validate()) {
+      // Scroll to first error
+      const firstErr = form.querySelector('.error');
+      if (firstErr) firstErr.scrollIntoView({ behavior:'smooth', block:'center' });
+      return;
+    }
+
+    btnSubmit.disabled = true;
+    btnSubmit.innerHTML = 'در حال ارسال... <span class="spinner"></span>';
+
+    const payload = {
+      name:             document.getElementById('name').value.trim(),
+      phone:            document.getElementById('phone').value.trim(),
+      business_name:    document.getElementById('business_name').value.trim(),
+      product_interest: document.getElementById('product_interest').value.trim(),
+      estimated_volume: document.getElementById('estimated_volume').value.trim(),
+      city:             document.getElementById('city').value.trim(),
+      message:          document.getElementById('message').value.trim(),
+      source:           document.getElementById('source').value,
+      received_at:      new Date().toISOString(),
+      form_version:     "1.0",
+    };
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body:    JSON.stringify(payload),
+      });
+
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+
+      form.style.display = 'none';
+      stateSuccess.classList.add('active');
+
+    } catch (err) {
+      console.error('Webhook error:', err);
+      form.style.display = 'none';
+      stateError.classList.add('active');
+    }
+  });
+
+  btnRetry.addEventListener('click', () => {
+    stateError.classList.remove('active');
+    form.style.display = 'block';
+    btnSubmit.disabled = false;
+    btnSubmit.innerHTML = 'ارسال درخواست 🚀';
+  });
+
+  // ── Read brand name from URL param (optional) ──
+  // مثال: form.html?brand=پارچه+احمدی
+  const urlBrand = new URLSearchParams(window.location.search).get('brand');
+  if (urlBrand) document.getElementById('brand-name').textContent = urlBrand;
+
+  // ── Pre-select source from URL param ──
+  // مثال: form.html?source=telegram
+  const urlSource = new URLSearchParams(window.location.search).get('source');
+  if (urlSource) {
+    const sel = document.getElementById('source');
+    for (let o of sel.options) if (o.value === urlSource) { o.selected = true; break; }
+  }
+</script>
+
+</body>
+</html>
